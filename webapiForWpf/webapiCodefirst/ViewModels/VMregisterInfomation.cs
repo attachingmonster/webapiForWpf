@@ -6,7 +6,7 @@ using System.Web;
 namespace webapiCodefirst.ViewModels
 {
     /// <summary>
-    /// webapi返回的信息
+    /// webapi返回的信息 这些地方与wpf一致的注释
     /// </summary>
     public class VMregisterInfomation
     {

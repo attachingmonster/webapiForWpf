@@ -5,6 +5,9 @@ using System.Web;
 
 namespace webapiCodefirst.Models
 {
+    /// <summary>
+    /// 用户
+    /// </summary>
     public class SysUser
     {
         public int ID { get; set; }
@@ -17,7 +20,7 @@ namespace webapiCodefirst.Models
         /// </summary>
         public string UserPassword { get; set; }
         /// <summary>
-        /// 回答拾回问题答案
+        /// 回答拾回问题答案，建议使用 UserQuestionAnswer
         /// </summary>
         public string UserAnswer { get; set; }
         /// <summary>

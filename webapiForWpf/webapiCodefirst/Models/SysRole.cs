@@ -5,6 +5,9 @@ using System.Web;
 
 namespace webapiCodefirst.Models
 {
+    /// <summary>
+    /// 用户角色
+    /// </summary>
     public class SysRole
     {
         public int ID { get; set; }
