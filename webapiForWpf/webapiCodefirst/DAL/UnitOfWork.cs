@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using webapiCodefirst.Models;
 using webapiCodefirst.Repositories;
-using webapiCodefirst.ViewMoles;
 
 namespace webapiCodefirst.DAL
 {
