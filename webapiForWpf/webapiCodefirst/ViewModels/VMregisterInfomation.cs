@@ -13,6 +13,7 @@ namespace webapiCodefirst.ViewModels
         /// <summary>
         /// webapi注册信息：成功、失败、无效等
         /// </summary>
-        public String message { get; set; }
+        public String Message { get; set; }
+
     }
 }
