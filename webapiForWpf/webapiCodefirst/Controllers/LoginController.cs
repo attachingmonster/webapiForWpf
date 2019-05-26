@@ -32,7 +32,20 @@ namespace webapiCodefirst.Controllers
                         var sysUsers = unitOfWork.SysUserRepository.Get().Where(s => s.UserPassword.Equals(CreateMD5.EncryptWithMD5(viewModelLogin.Password)));//判断密码是否错误
                         if (sysUsers != null)
                         {
+                            if (viewModelLogin.RememberPasswerd=="1")
+                            {
+                                sysUser.RememberPassword = "1";
+                                unitOfWork.SysUserRepository.Update(sysUser);
+                                unitOfWork.Save();
+                            }
+                            else
+                            {
+                                sysUser.RememberPassword = "0";
+                                unitOfWork.SysUserRepository.Update(sysUser);
+                                unitOfWork.Save();
+                            }
                             throw new Exception("登录成功！");
+                            
                         }
                         else
                         {
