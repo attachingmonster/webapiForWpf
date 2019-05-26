@@ -164,6 +164,7 @@
     <Compile Include="Controllers\ChangePwdControllers\ChangePwdController.cs" />
     <Compile Include="Controllers\ChangePwdControllers\ChangePwdModelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\AccountContext.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\IGenericRepository.cs" />
     <Compile Include="ViewModels\ViewModelChangePwd.cs" />
+    <Compile Include="ViewModels\ViewModelLogin.cs" />
     <Compile Include="ViewModels\ViewModelRegister.cs" />
     <Compile Include="ViewModels\ViewModelInformation.cs" />
   </ItemGroup>
