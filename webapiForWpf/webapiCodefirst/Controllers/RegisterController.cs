@@ -35,7 +35,7 @@ namespace webapiCodefirst.Controllers
                    {                     
                        if (viewmodelRegister.Password != "")    //判断密码是否为空
                        {                          
-                            if (viewmodelRegister.QuestionOrAnswer!= "1" + "2" + "3" + "4" + "5")    //判断拾回密码是否为空
+                            if (viewmodelRegister.QuestionOrAnswer!= "你最喜欢的颜色是" || viewmodelRegister.QuestionOrAnswer != "你的生日是"|| viewmodelRegister.QuestionOrAnswer!= "你的父亲叫什么名字"|| viewmodelRegister.QuestionOrAnswer != "你最喜欢做什么"|| viewmodelRegister.QuestionOrAnswer != "你的梦想是")    //判断拾回密码是否为空
                             {
                                 // 下面需要调试 看看 ，逻辑过程是否合理，另外角色根据具体场景，一般是默认缺省的角色，其他的角色在用户管理界面进行重新 赋予高级角色
                                 var sysRole = unitOfWork.SysRoleRepository.Get().Where(s => s.RoleName.Equals(viewmodelRegister.RoleName)).FirstOrDefault();    //寻找用户所选择角色在UserRole里的实例，返回对象

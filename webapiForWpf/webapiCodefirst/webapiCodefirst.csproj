@@ -165,6 +165,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\RetrievePswController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\AccountContext.cs" />
     <Compile Include="DAL\AccountInitializer.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="ViewModels\ViewModelChangePsw.cs" />
     <Compile Include="ViewModels\ViewModelLogin.cs" />
     <Compile Include="ViewModels\ViewModelRegister.cs" />
+    <Compile Include="ViewModels\ViewModelRetrievePsw.cs" />
     <Compile Include="ViewModels\VMregisterInfomation.cs" />
   </ItemGroup>
   <ItemGroup>
