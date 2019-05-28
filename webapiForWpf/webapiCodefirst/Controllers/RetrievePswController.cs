@@ -10,6 +10,9 @@ using webapiCodefirst.ViewModels;
 
 namespace webapiCodefirst.Controllers
 {
+    /// <summary>
+    /// 重置密码
+    /// </summary>
     public class RetrievePswController : ApiController
     {
         private AccountContext db = new AccountContext();
@@ -25,12 +28,15 @@ namespace webapiCodefirst.Controllers
                 var u = unitOfWork.SysUserRepository.Get().Where(s => s.UserAccount.Equals(viewModelRetrievePsw.Account)).FirstOrDefault();  //查找是否存在账号
                 if (u != null)
                 {
+                    //把问题与答案一起加密 放在  QuestionOrAnswer 字段里
                     if (viewModelRetrievePsw.QuestionOrAnswer != "你最喜欢的颜色是" || viewModelRetrievePsw.QuestionOrAnswer != "你的生日是" || viewModelRetrievePsw.QuestionOrAnswer != "你的父亲叫什么名字" || viewModelRetrievePsw.QuestionOrAnswer != "你最喜欢做什么" || viewModelRetrievePsw.QuestionOrAnswer != "你的梦想是")
                     {
+                        //这些信息都比较敏感，所以加密后再 发到 webapi  进行匹配
                         if (u.UserAnswer.Equals(CreateMD5.EncryptWithMD5(viewModelRetrievePsw.QuestionOrAnswer)))
                         {
                             if (viewModelRetrievePsw.NewPassword != "")
                             {
+                                //密码怎么样，由UI去判断，减少服务端的 载荷压力，包括下面的 密码一致，2次密码是否一致，都在 UI 里决解，暂时只有账号判断在 服务端 进行
                                 int number = 0, character = 0;
                                 foreach (char c in viewModelRetrievePsw.NewPassword)   //规范密码必须由ASCII码33~126之间的字符构成
                                 {
