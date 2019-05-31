@@ -22,57 +22,48 @@ namespace webapiCodefirst.Controllers
         [HttpPost]
         [ActionName("PostRegister")]
         
-        public VMregisterInfomation Register(ViewModelRegister viewmodelRegister)
+        public ViewModelInformation Register(ViewModelRegister viewmodelRegister)
         {
-           VMregisterInfomation vMregisterInfomation = null ;
-           try
-           {
-                vMregisterInfomation = new VMregisterInfomation();
-               if (viewmodelRegister.Account!= "")    //判断用户账号是否为空
-               {
-                   var u = unitOfWork.SysUserRepository.Get().Where(s => s.UserAccount.Equals(viewmodelRegister.Account)).FirstOrDefault();   //查找是否存在账号，存在返回账号所在对象，否则返回null
-                    if (u == null)    //判断账号是否存在
+           ViewModelInformation viewModelInformation = null ;
+            try
+            {
+                viewModelInformation = new ViewModelInformation();
+                var u = unitOfWork.SysUserRepository.Get().Where(s => s.UserAccount.Equals(viewmodelRegister.Account)).FirstOrDefault();   //查找是否存在账号，存在返回账号所在对象，否则返回null
+                if (u == null)    //判断账号是否存在
+                {
+                    // 下面需要调试 看看 ，逻辑过程是否合理，另外角色根据具体场景，一般是默认缺省的角色，其他的角色在用户管理界面进行重新 赋予高级角色
+                    var sysRole = unitOfWork.SysRoleRepository.Get().Where(s => s.RoleName.Equals(viewmodelRegister.RoleName)).FirstOrDefault();    //寻找用户所选择角色在UserRole里的实例，返回对象
+                    if (sysRole != null)
                     {
-                        // 下面需要调试 看看 ，逻辑过程是否合理，另外角色根据具体场景，一般是默认缺省的角色，其他的角色在用户管理界面进行重新 赋予高级角色
-                        var sysRole = unitOfWork.SysRoleRepository.Get().Where(s => s.RoleName.Equals(viewmodelRegister.RoleName)).FirstOrDefault();    //寻找用户所选择角色在UserRole里的实例，返回对象
-                        if (sysRole != null)
-                        {
-                            var CurrentUser = new SysUser();
-                            CurrentUser.UserAccount = viewmodelRegister.Account;
-                            CurrentUser.UserPassword = viewmodelRegister.Password;
-                            CurrentUser.UserAnswer = viewmodelRegister.QuestionOrAnswer;
-                            CurrentUser.RememberPassword = "0";
-                            unitOfWork.SysUserRepository.Insert(CurrentUser);    //增加新SysUser
-                            unitOfWork.Save();
+                        var CurrentUser = new SysUser();
+                        CurrentUser.UserAccount = viewmodelRegister.Account;
+                        CurrentUser.UserPassword = viewmodelRegister.Password;
+                        CurrentUser.UserAnswer = viewmodelRegister.QuestionOrAnswer;
+                        CurrentUser.RememberPassword = "0";
+                        unitOfWork.SysUserRepository.Insert(CurrentUser);    //增加新SysUser
+                        unitOfWork.Save();
 
-                            var CurrentUserRole = new SysUserRole();
-                            CurrentUserRole.SysUserID = CurrentUser.ID;
-                            CurrentUserRole.SysRoleID = sysRole.ID;
-                            unitOfWork.SysUserRoleRepository.Insert(CurrentUserRole);    //增加新SysUserRole
-                            unitOfWork.Save();    //对更改进行保存
-                            vMregisterInfomation.Message = "注册成功";
-                            return vMregisterInfomation;
-                        }
+                        var CurrentUserRole = new SysUserRole();
+                        CurrentUserRole.SysUserID = CurrentUser.ID;
+                        CurrentUserRole.SysRoleID = sysRole.ID;
+                        unitOfWork.SysUserRoleRepository.Insert(CurrentUserRole);    //增加新SysUserRole
+                        unitOfWork.Save();    //对更改进行保存
+                        viewModelInformation.Message = "注册成功";
+                        return viewModelInformation;
                     }
-                    else
-                    {
-                        throw new Exception("用户名已存在！");
-                    }
-               }
-               else
-               {
-                   throw new Exception("账号不能为空！");
-               }
-
-
-           }
-           catch (Exception ex)
-           {
-                vMregisterInfomation.Message = ex.Message;
-                return vMregisterInfomation;
+                }
+                else
+                {
+                    throw new Exception("用户名已存在！");
+                }
+            }
+            catch (Exception ex)
+            {
+                viewModelInformation.Message = ex.Message;
+                return viewModelInformation;
             }
 
-            return vMregisterInfomation;
+            return viewModelInformation;
         }
     }
 }

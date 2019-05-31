@@ -18,54 +18,45 @@ namespace webapiCodefirst.Controllers
         private UnitOfWork unitOfWork = new UnitOfWork();
         [HttpPost]
         [ActionName("PostLogin")]
-        public VMregisterInfomation Login(ViewModelLogin viewModelLogin)
+        public ViewModelInformation Login(ViewModelLogin viewModelLogin)
         {
-            VMregisterInfomation vMregisterInfomation = null;
+            ViewModelInformation viewModelInformation = null;
             try
             {
-                vMregisterInfomation = new VMregisterInfomation();
-                if (viewModelLogin.Account != "" && viewModelLogin.Password != "")//判断账号或者密码是否为空
+                viewModelInformation = new ViewModelInformation();
+                var sysUser = unitOfWork.SysUserRepository.Get().Where(s => s.UserAccount.Equals(viewModelLogin.Account)).FirstOrDefault();//查找是否存在账号
+                if (sysUser != null)
                 {
-                    var sysUser = unitOfWork.SysUserRepository.Get().Where(s => s.UserAccount.Equals(viewModelLogin.Account)).FirstOrDefault();//查找是否存在账号
-                    if (sysUser != null)
-                    {
-                        var sysUsers = unitOfWork.SysUserRepository.Get().Where(s => s.UserPassword.Equals(CreateMD5.EncryptWithMD5(viewModelLogin.Password)));//判断密码是否错误
-                        if (sysUsers != null)
+                    var sysUsers = unitOfWork.SysUserRepository.Get().Where(s => s.UserAccount.Equals(viewModelLogin.Account) && (s.UserPassword.Equals(viewModelLogin.Password)) || (s.RememberPassword.Equals("1") && (CreateMD5.EncryptWithMD5(CreateMD5.EncryptWithMD5(s.UserPassword)).Equals(viewModelLogin.Password)))).FirstOrDefault();
+                    if (sysUsers != null)
+                    {                       
+                        if(viewModelLogin.RememberPassword=="1")
                         {
-                            if (viewModelLogin.RememberPasswerd=="1")
-                            {
-                                sysUser.RememberPassword = "1";
-                                unitOfWork.SysUserRepository.Update(sysUser);
-                                unitOfWork.Save();
-                            }
-                            else
-                            {
-                                sysUser.RememberPassword = "0";
-                                unitOfWork.SysUserRepository.Update(sysUser);
-                                unitOfWork.Save();
-                            }
-                            throw new Exception("登录成功！");
-                            
+                            sysUsers.RememberPassword = "1";
+                            unitOfWork.Save();
                         }
                         else
                         {
-                            throw new Exception("密码错误！");
+                            sysUsers.RememberPassword = "0";
+                            unitOfWork.Save();
                         }
+                        throw new Exception("登录成功");
+
                     }
                     else
                     {
-                        throw new Exception("账号不存在！");
+                        throw new Exception("密码错误！");
                     }
                 }
                 else
                 {
-                    throw new Exception("账号或者密码不能为空！");
+                    throw new Exception("账号不存在！");
                 }
             }
             catch (Exception ex)
             {
-                vMregisterInfomation.Message = ex.Message;
-                return vMregisterInfomation;
+                viewModelInformation.Message = ex.Message;
+                return viewModelInformation;
             }
            
         }

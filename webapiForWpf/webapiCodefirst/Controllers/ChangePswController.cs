@@ -15,12 +15,12 @@ namespace webapiCodefirst.Controllers
         private UnitOfWork unitOfWork = new UnitOfWork();
         [HttpPost]
         [ActionName("PostChangePsw")]
-        public VMregisterInfomation ChangePsw(ViewModelChangePsw viewModelChangePsw)
+        public ViewModelInformation ChangePsw(ViewModelChangePsw viewModelChangePsw)
         {
-            VMregisterInfomation vMregisterInfomation = null;
+            ViewModelInformation viewModelInformation = null;
             try
             {
-                vMregisterInfomation = new VMregisterInfomation();
+                viewModelInformation = new ViewModelInformation();
                 string OldPassword = CreateMD5.EncryptWithMD5(viewModelChangePsw.OldPassword);     //原密码
                 string NewPassword = CreateMD5.EncryptWithMD5(viewModelChangePsw.NewPassword);     //新密码
 
@@ -81,8 +81,8 @@ namespace webapiCodefirst.Controllers
             }
             catch (Exception ex)
             {
-                vMregisterInfomation.Message = ex.Message;
-                return vMregisterInfomation;
+                viewModelInformation.Message = ex.Message;
+                return viewModelInformation;
             }
 
 

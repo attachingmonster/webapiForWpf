@@ -19,12 +19,12 @@ namespace webapiCodefirst.Controllers
         private UnitOfWork unitOfWork = new UnitOfWork();
         [HttpPost]
         [ActionName("PostRetrievePsw")]
-        public VMregisterInfomation RetrievePsw(ViewModelRetrievePsw viewModelRetrievePsw)
+        public ViewModelInformation RetrievePsw(ViewModelRetrievePsw viewModelRetrievePsw)
         {
-            VMregisterInfomation vMregisterInfomation = null;
+            ViewModelInformation viewModelInformation = null;
             try
             {
-                vMregisterInfomation = new VMregisterInfomation();
+                viewModelInformation = new ViewModelInformation();
                 var u = unitOfWork.SysUserRepository.Get().Where(s => s.UserAccount.Equals(viewModelRetrievePsw.Account)).FirstOrDefault();  //查找是否存在账号
                 if (u != null)
                 {
@@ -57,8 +57,8 @@ namespace webapiCodefirst.Controllers
             }
             catch (Exception ex)
             {
-                vMregisterInfomation.Message = ex.Message;
-                return vMregisterInfomation;
+                viewModelInformation.Message = ex.Message;
+                return viewModelInformation;
             }
 
         }

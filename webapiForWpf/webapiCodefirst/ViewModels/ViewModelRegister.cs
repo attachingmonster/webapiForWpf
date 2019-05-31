@@ -13,7 +13,7 @@ namespace webapiCodefirst.ViewModels
         public String Account { get; set; }
         public String Password { get; set; }
         public String QuestionOrAnswer { get; set; }
-        public String RememberPasswerd { get; set; }
+        public String RememberPassword { get; set; }
         public String RoleName { get; set; }
     }
 }
